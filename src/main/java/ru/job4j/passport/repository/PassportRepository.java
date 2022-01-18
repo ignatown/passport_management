@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface PassportRepository extends CrudRepository<Passport, Integer> {
     List<Passport> findBySeria(int seria);
+    List<Passport> findByNumber(int number);
     Passport findById(int id);
     @Query(value = "from Passport where dateOfExpirating < current_timestamp")
     List<Passport> findUnavalible();

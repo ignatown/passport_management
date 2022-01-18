@@ -17,12 +17,12 @@ public class PassportRest {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Passport> save(@RequestBody Passport passport) {
+    public ResponseEntity<Passport> save(@RequestBody Passport passport) throws IllegalArgumentException {
         return new ResponseEntity<>(passportService.saveOrUpdate(passport), HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Passport> update(@RequestBody Passport passport) {
+    public ResponseEntity<Passport> update(@RequestBody Passport passport) throws IllegalArgumentException {
         if (passportService.findPassportById(passport.getId()) == null) {
             return ResponseEntity.notFound().build();
         }

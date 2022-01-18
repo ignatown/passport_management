@@ -14,7 +14,14 @@ public class PassportService {
         this.passportRepository = passportRepository;
     }
 
-    public Passport saveOrUpdate(Passport passport) {
+    public Passport saveOrUpdate(Passport passport) throws IllegalArgumentException {
+        if (passport.getId() == 0) {
+            for (Passport p : passportRepository.findBySeria(passport.getSeria())) {
+                if (p.getNumber() == passport.getNumber()) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
         passportRepository.save(passport);
         return passport;
     }
@@ -33,6 +40,10 @@ public class PassportService {
 
     public List<Passport> findPassportBySeria(int seria) {
         return passportRepository.findBySeria(seria);
+    }
+
+    public List<Passport> findPassportByNumber(int number) {
+        return passportRepository.findByNumber(number);
     }
 
     public List<Passport> findUnavalible() {
