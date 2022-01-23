@@ -16,11 +16,12 @@ public class PassportService {
 
     public Passport saveOrUpdate(Passport passport) throws IllegalArgumentException {
         if (passport.getId() == 0) {
-            for (Passport p : passportRepository.findBySeria(passport.getSeria())) {
-                if (p.getNumber() == passport.getNumber()) {
+                if (passportRepository.existsPassportBySeriaAndNumber(
+                        passport.getSeria(),
+                        passport.getNumber())
+                ) {
                     throw new IllegalArgumentException();
                 }
-            }
         }
         passportRepository.save(passport);
         return passport;
